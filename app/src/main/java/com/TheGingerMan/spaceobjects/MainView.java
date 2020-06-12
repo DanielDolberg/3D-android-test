@@ -12,28 +12,48 @@ public class MainView extends View {
     Edge[] cubeEdges;
     SpacialObject cube;
 
+    Vertex[] lineVertices;
+    Edge[] lineEdges;
+    SpacialObject line;
+
+
+
     float timeStep;
-//blablabla
+
     public MainView(Context context, float width, float height) {
         super(context);
         this.width=width;
         this.height=height;
 
-
         space = new Space(width,height);
+
+
+        lineVertices = new Vertex[2];
+        lineEdges = new Edge[1];
+
+        lineVertices[0] = new Vertex(5,5,0);
+        lineVertices[1] = new Vertex(-5,-5,0);
+
+        lineEdges[0] = new Edge(cubeVertices[0], cubeVertices[1]);
+
+        line = new SpacialObject(new Pivot(new Vector(0,0,0)));
+        line.vertices = lineVertices;
+        line.edges = lineEdges;
 
         cubeVertices = new Vertex[8];
         cubeEdges = new Edge[8];
 
-        cubeVertices[0] = new Vertex(-1,1,1);// /\----------
-        cubeVertices[1] = new Vertex(1,1,1); // ----------/\
-        cubeVertices[2] = new Vertex(-1,-1,1);// \/----------
-        cubeVertices[3] = new Vertex(1,-1,1);// ----------\/
 
-        cubeVertices[4] = new Vertex(-1,1,-1);// /\----------
-        cubeVertices[5] = new Vertex(1,1,-1); // ----------/\
-        cubeVertices[6] = new Vertex(-1,-1,-1);// \/----------
-        cubeVertices[7] = new Vertex(1,-1,-1);// ----------\/
+
+        cubeVertices[0] = new Vertex(-5,5,1);// /\----------
+        cubeVertices[1] = new Vertex(5,5,1); // ----------/\
+        cubeVertices[2] = new Vertex(-5,-5,1);// \/----------
+        cubeVertices[3] = new Vertex(5,-5,1);// ----------\/
+
+        cubeVertices[4] = new Vertex(-5,5,-1);// /\----------
+        cubeVertices[5] = new Vertex(5,5,-1); // ----------/\
+        cubeVertices[6] = new Vertex(-5,-5,-1);// \/----------
+        cubeVertices[7] = new Vertex(5,-5,-1);// ----------\/
 
         cubeEdges[0] = new Edge(cubeVertices[0],cubeVertices[1]);
         cubeEdges[1] = new Edge(cubeVertices[0],cubeVertices[2]);
@@ -50,14 +70,17 @@ public class MainView extends View {
         cube.edges = cubeEdges;
 
 
+
+
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        //space.draw(canvas);
-        cube.draw(canvas, space);
+        space.draw(canvas);
+        line.draw(canvas, space);
+        cube.draw(canvas,space);
 
         invalidate();
     }

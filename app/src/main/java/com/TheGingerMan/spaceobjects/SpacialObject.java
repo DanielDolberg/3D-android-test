@@ -42,24 +42,42 @@ public class SpacialObject {
         }
     }
 
-    public void rotateGlobalZ(float na)
+    public void rotateGlobalZ(float steps)
     {
-        float x1,x2,y1,y2,fx,fy,angle;
+        float x1,x2,y1,y2;
         x1 = pivot.vector.x;
         y1 = pivot.vector.y;
         float r;
 
         for (int i = 0; i < vertices.length; i++) {
+            System.out.println("yeee "+i + " "+ vertices[i].x + " " + vertices[i].y);
             x2 = vertices[i].x;
             y2 = vertices[i].y;
-
-            angle = Math.abs(y2/x2);
-            angle = y2/x2;
-            angle = (float)Math.atan(angle);
-
             r = (x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2);
-            r = (float)Math.sqrt(r);
+
+            if(y2 == y1) {
+                if (x2 < 0)
+                    vertices[i].x += steps;
+                else
+                    vertices[i].x -= steps;
             }
+            else{
+                if (x2 < 0)
+                    vertices[i].x -= steps;
+                else
+                    vertices[i].x += steps;
+            }
+
+            if(y2<0)
+                vertices[i].y = (float)-Math.sqrt(r-vertices[i].x*vertices[i].x);
+            else
+                vertices[i].y = (float)Math.sqrt(r-vertices[i].x*vertices[i].x);
+
+            if(Float.isNaN(vertices[i].y))
+                vertices[i].y = 0;
+
+            System.out.println("yeee "+ vertices[i].x + " " + vertices[i].y);
+        }
 
 
     }
