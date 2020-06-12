@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (eventaction) {
             case MotionEvent.ACTION_DOWN:
-                mainView.cube.rotateGlobalZ(.1f);
+                mainView.line.rotateGlobalZ(.1f);
                 //mainView.cube.move(1,1,0);
                 break;
 

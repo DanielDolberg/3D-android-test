@@ -31,10 +31,10 @@ public class MainView extends View {
         lineVertices = new Vertex[2];
         lineEdges = new Edge[1];
 
-        lineVertices[0] = new Vertex(5,5,0);
-        lineVertices[1] = new Vertex(-5,-5,0);
+        lineVertices[0] = new Vertex(5,0,0);
+        lineVertices[1] = new Vertex(-5,0,0);
 
-        lineEdges[0] = new Edge(cubeVertices[0], cubeVertices[1]);
+        lineEdges[0] = new Edge(lineVertices[0], lineVertices[1]);
 
         line = new SpacialObject(new Pivot(new Vector(0,0,0)));
         line.vertices = lineVertices;
@@ -80,7 +80,7 @@ public class MainView extends View {
 
         space.draw(canvas);
         line.draw(canvas, space);
-        cube.draw(canvas,space);
+        //cube.draw(canvas,space);
 
         invalidate();
     }

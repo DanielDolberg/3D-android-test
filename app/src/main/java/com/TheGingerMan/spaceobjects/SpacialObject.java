@@ -23,6 +23,7 @@ public class SpacialObject {
         red = new Paint();
         red.setColor(Color.RED);
         red.setStrokeWidth(20);
+        red.setStyle(Paint.Style.STROKE);
 
         blue = new Paint();
         blue.setColor(Color.BLUE);
@@ -42,48 +43,46 @@ public class SpacialObject {
         }
     }
 
-    public void rotateGlobalZ(float steps)
-    {
-        float x1,x2,y1,y2;
+    public void rotateGlobalZ(float angle) {
+        float x1, x2, y1, y2,o;
         x1 = pivot.vector.x;
         y1 = pivot.vector.y;
         float r;
 
         for (int i = 0; i < vertices.length; i++) {
-            System.out.println("yeee "+i + " "+ vertices[i].x + " " + vertices[i].y);
             x2 = vertices[i].x;
             y2 = vertices[i].y;
-            r = (x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2);
+            r = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+            r = (float)Math.sqrt(r);
 
-            if(y2 == y1) {
-                if (x2 < 0)
-                    vertices[i].x += steps;
+            o=(float)Math.abs(Math.tanh(y2/x2));
+
+            if(x2<x1)
+                vertices[i].x = -r*(float)Math.cos(o+angle);
+            else if(x2>x1)
+                vertices[i].x = r*(float)Math.cos(o+angle);
+            else if(x2==x1) {
+                if(y2>y1)
+                    vertices[i].x = r * (float) Math.cos(o+angle);
                 else
-                    vertices[i].x -= steps;
+                    vertices[i].x = -r*(float)Math.cos(o+angle);
             }
-            else{
-                if (x2 < 0)
-                    vertices[i].x -= steps;
+            if(y2<y1)
+            vertices[i].y = -r*(float)Math.sin(o+angle);
+            else if(y2>y1)
+                vertices[i].y = r*(float)Math.sin(o+angle);
+            else if(y2==y1) {
+                if(x2>x1)
+                    vertices[i].y = r * (float) Math.sin(o+angle);
                 else
-                    vertices[i].x += steps;
+                    vertices[i].y = -r*(float)Math.sin(o+angle);
             }
 
-            if(y2<0)
-                vertices[i].y = (float)-Math.sqrt(r-vertices[i].x*vertices[i].x);
-            else
-                vertices[i].y = (float)Math.sqrt(r-vertices[i].x*vertices[i].x);
-
-            if(Float.isNaN(vertices[i].y))
-                vertices[i].y = 0;
-
-            System.out.println("yeee "+ vertices[i].x + " " + vertices[i].y);
         }
-
-
     }
 
 
-    public void draw(Canvas canvas, Space space) {
+    public void draw(Canvas canvas, Space space){
 
         for (int i = 0; i < edges.length ; i++) {
             edges[i].draw(canvas,red,space);
@@ -93,7 +92,7 @@ public class SpacialObject {
             vertices[i].draw(canvas,blue,space);
         }
 
-        //canvas.drawCircle(space.XinSpace(pivot.vector.x),space.YinSpace(pivot.vector.y),(float) Math.sqrt(((space.XinSpace(pivot.vector.x) -space.XinSpace(vertices[0].x))*(space.XinSpace(pivot.vector.x) - space.XinSpace(vertices[0].x)) + (space.YinSpace(pivot.vector.y) - space.YinSpace(vertices[0].y))*(space.YinSpace(pivot.vector.y) - space.YinSpace(vertices[0].y)))),red);
+        canvas.drawCircle(space.XinSpace(pivot.vector.x),space.YinSpace(pivot.vector.y),(float) Math.sqrt(((space.XinSpace(pivot.vector.x) -space.XinSpace(vertices[0].x))*(space.XinSpace(pivot.vector.x) - space.XinSpace(vertices[0].x)) + (space.YinSpace(pivot.vector.y) - space.YinSpace(vertices[0].y))*(space.YinSpace(pivot.vector.y) - space.YinSpace(vertices[0].y)))),red);
     }
 
 }
