@@ -13,7 +13,7 @@ public class MainView extends View {
     SpacialObject cube;
 
     float timeStep;
-
+//blablabla
     public MainView(Context context, float width, float height) {
         super(context);
         this.width=width;
