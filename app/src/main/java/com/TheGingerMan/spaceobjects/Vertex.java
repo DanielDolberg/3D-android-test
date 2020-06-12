@@ -5,12 +5,12 @@ import android.graphics.Paint;
 
 public class Vertex extends Vector{
 
-    public Vertex(float x, float y, float z) {
+    public Vertex(double x, double y, double z) {
         super(x, y, z);
     }
 
 
     public void draw(Canvas canvas, Paint p, Space space){
-        canvas.drawCircle(space.XinSpace(x),space.YinSpace(y),20,p);
+        canvas.drawCircle((float)(space.XinSpace(x)),(float)(space.YinSpace(y)),20,p);
     }
 }

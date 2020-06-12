@@ -6,13 +6,13 @@ import android.graphics.Paint;
 
 public class Space {
 
-    float screenW,screenH;
-    float X0,Y0,spacialX ,spacialY;
-    float offsetX,offsetY;
+    double screenW,screenH;
+    double X0,Y0,spacialX ,spacialY;
+    double offsetX,offsetY;
     Paint red;
 
 
-    public Space(float ScreenWidth,float ScreenHeight){
+    public Space(double ScreenWidth,double ScreenHeight){
 
         screenW = ScreenWidth;
         screenH = ScreenHeight;
@@ -41,30 +41,30 @@ public class Space {
 
         for(int i=0;i<10;i++)
         {
-         canvas.drawCircle(offsetX+ X0 + i*spacialX,offsetY + Y0,20,red);
+         canvas.drawCircle((float)(offsetX+ X0 + i*spacialX),(float)(offsetY + Y0),20,red);
         }
 
         for(int i=1;i<10;i++)
         {
-            canvas.drawCircle(offsetX+ X0- i*spacialX,offsetY + Y0,20,red);
+            canvas.drawCircle((float)(offsetX+ X0- i*spacialX),(float)(offsetY + Y0),20,red);
         }
 
         for(int i=0;i<10;i++)
         {
-            canvas.drawCircle(offsetX+X0,offsetY +Y0 + i*spacialY,20,red);
+            canvas.drawCircle((float)(offsetX+X0),(float)(offsetY +Y0 + i*spacialY),20,red);
         }
 
         for(int i=1;i<10;i++)
         {
-            canvas.drawCircle(offsetX+X0,offsetY +Y0 - i*spacialY,20,red);
+            canvas.drawCircle((float)(offsetX+X0),(float)(offsetY +Y0 - i*spacialY),20,red);
         }
     }
 
-    public float XinSpace(float x) {
+    public double XinSpace(double x) {
         return (offsetX+ X0 + spacialX*x);
     }
 
-    public float YinSpace(float y) {
+    public double YinSpace(double y) {
         return (offsetY + Y0 + spacialY*y);
     }
 }

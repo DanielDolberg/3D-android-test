@@ -19,8 +19,8 @@ public class MainActivity extends AppCompatActivity {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        float width = size.x;
-        float height = size.y;
+        double width = size.x;
+        double height = size.y;
 
         mainView = new MainView(this, width, height);
         setContentView(mainView);
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (eventaction) {
             case MotionEvent.ACTION_DOWN:
-                mainView.line.rotateGlobalZ(.1f);
+                mainView.cube.rotateGlobalZ(5f);
                 //mainView.cube.move(1,1,0);
                 break;
 

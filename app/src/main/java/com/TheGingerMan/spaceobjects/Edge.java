@@ -15,6 +15,6 @@ public class Edge {
 
     public void draw(Canvas canvas, Paint p,Space space)
     {
-        canvas.drawLine(space.XinSpace(v1.x),space.YinSpace(v1.y),space.XinSpace(v2.x),space.YinSpace(v2.y),p);
+        canvas.drawLine((float)(space.XinSpace(v1.x)),(float)(space.YinSpace(v1.y)),(float)(space.XinSpace(v2.x)),(float)(space.YinSpace(v2.y)),p);
     }
 }

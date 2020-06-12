@@ -43,42 +43,39 @@ public class SpacialObject {
         }
     }
 
-    public void rotateGlobalZ(float angle) {
-        float x1, x2, y1, y2,o;
+    public void rotateGlobalZ(double angle) {
+        double x1, x2, y1, y2,o,ne;
         x1 = pivot.vector.x;
         y1 = pivot.vector.y;
-        float r;
+        double r;
 
         for (int i = 0; i < vertices.length; i++) {
             x2 = vertices[i].x;
             y2 = vertices[i].y;
-            r = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
-            r = (float)Math.sqrt(r);
 
-            o=(float)Math.abs(Math.tanh(y2/x2));
+            r = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+            r = Math.sqrt(r);
+
+            o = Math.asin(y2/r);
+            ne = Math.toRadians(angle);
+
+            System.out.println("yeeeee"+Math.toDegrees(o));
+
+            //vertices[i].x=r*Math.cos(ne);
+            //vertices[i].y=r*Math.sin(ne);
 
             if(x2<x1)
-                vertices[i].x = -r*(float)Math.cos(o+angle);
-            else if(x2>x1)
-                vertices[i].x = r*(float)Math.cos(o+angle);
-            else if(x2==x1) {
-                if(y2>y1)
-                    vertices[i].x = r * (float) Math.cos(o+angle);
-                else
-                    vertices[i].x = -r*(float)Math.cos(o+angle);
-            }
-            if(y2<y1)
-            vertices[i].y = -r*(float)Math.sin(o+angle);
-            else if(y2>y1)
-                vertices[i].y = r*(float)Math.sin(o+angle);
-            else if(y2==y1) {
-                if(x2>x1)
-                    vertices[i].y = r * (float) Math.sin(o+angle);
-                else
-                    vertices[i].y = -r*(float)Math.sin(o+angle);
-            }
+                vertices[i].x=-r*Math.cos(o-ne);
+            if(x2>x1)
+                vertices[i].x=r*Math.cos(o+ne);
 
+            if(y2<y1)
+                vertices[i].y=-r*Math.sin(o-ne);
+            if(y2>y1)
+                vertices[i].y=r*Math.sin(o+ne);
         }
+
+
     }
 
 
@@ -92,7 +89,7 @@ public class SpacialObject {
             vertices[i].draw(canvas,blue,space);
         }
 
-        canvas.drawCircle(space.XinSpace(pivot.vector.x),space.YinSpace(pivot.vector.y),(float) Math.sqrt(((space.XinSpace(pivot.vector.x) -space.XinSpace(vertices[0].x))*(space.XinSpace(pivot.vector.x) - space.XinSpace(vertices[0].x)) + (space.YinSpace(pivot.vector.y) - space.YinSpace(vertices[0].y))*(space.YinSpace(pivot.vector.y) - space.YinSpace(vertices[0].y)))),red);
+        canvas.drawCircle((float)(space.XinSpace(pivot.vector.x)),(float)(space.YinSpace(pivot.vector.y)),(float) Math.sqrt(((space.XinSpace(pivot.vector.x) -space.XinSpace(vertices[0].x))*(space.XinSpace(pivot.vector.x) - space.XinSpace(vertices[0].x)) + (space.YinSpace(pivot.vector.y) - space.YinSpace(vertices[0].y))*(space.YinSpace(pivot.vector.y) - space.YinSpace(vertices[0].y)))),red);
     }
 
 }

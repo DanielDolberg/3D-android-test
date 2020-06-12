@@ -6,7 +6,7 @@ import android.view.View;
 
 public class MainView extends View {
 
-    float width,height;
+    double width,height;
     Space space;
     Vertex[] cubeVertices;
     Edge[] cubeEdges;
@@ -20,7 +20,7 @@ public class MainView extends View {
 
     float timeStep;
 
-    public MainView(Context context, float width, float height) {
+    public MainView(Context context, double width, double height) {
         super(context);
         this.width=width;
         this.height=height;
@@ -31,8 +31,8 @@ public class MainView extends View {
         lineVertices = new Vertex[2];
         lineEdges = new Edge[1];
 
-        lineVertices[0] = new Vertex(5,0,0);
-        lineVertices[1] = new Vertex(-5,0,0);
+        lineVertices[0] = new Vertex(4,4,0);
+        lineVertices[1] = new Vertex(-4,-4,0);
 
         lineEdges[0] = new Edge(lineVertices[0], lineVertices[1]);
 
@@ -79,8 +79,8 @@ public class MainView extends View {
         super.onDraw(canvas);
 
         space.draw(canvas);
-        line.draw(canvas, space);
-        //cube.draw(canvas,space);
+        //line.draw(canvas, space);
+        cube.draw(canvas,space);
 
         invalidate();
     }
