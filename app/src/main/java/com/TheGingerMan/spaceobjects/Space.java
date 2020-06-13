@@ -67,4 +67,5 @@ public class Space {
     public double YinSpace(double y) {
         return (offsetY + Y0 + spacialY*y);
     }
+
 }

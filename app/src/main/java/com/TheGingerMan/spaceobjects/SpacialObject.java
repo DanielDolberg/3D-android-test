@@ -56,24 +56,23 @@ public class SpacialObject {
             r = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
             r = Math.sqrt(r);
 
-            o = Math.asin(y2/r);
-            ne = Math.toRadians(angle);
-
-            System.out.println("yeeeee"+Math.toDegrees(o));
-
-            //vertices[i].x=r*Math.cos(ne);
-            //vertices[i].y=r*Math.sin(ne);
+            o = Math.asin(y1-y2/r);
 
             if(x2<x1)
-                vertices[i].x=-r*Math.cos(o-ne);
-            if(x2>x1)
-                vertices[i].x=r*Math.cos(o+ne);
+                o = Math.PI - o;
+            else if(y2>y1)
+                o = 2*Math.PI + o;
 
-            if(y2<y1)
-                vertices[i].y=-r*Math.sin(o-ne);
-            if(y2>y1)
-                vertices[i].y=r*Math.sin(o+ne);
+            ne = Math.toRadians(angle);
+            ne += o;
+
+            vertices[i].x = r * Math.cos(ne);
+            vertices[i].y = -r * Math.sin(ne);
         }
+
+
+        //vertices[i].x = 0;
+        //vertices[i].y = 0;
 
 
     }
@@ -89,7 +88,7 @@ public class SpacialObject {
             vertices[i].draw(canvas,blue,space);
         }
 
-        canvas.drawCircle((float)(space.XinSpace(pivot.vector.x)),(float)(space.YinSpace(pivot.vector.y)),(float) Math.sqrt(((space.XinSpace(pivot.vector.x) -space.XinSpace(vertices[0].x))*(space.XinSpace(pivot.vector.x) - space.XinSpace(vertices[0].x)) + (space.YinSpace(pivot.vector.y) - space.YinSpace(vertices[0].y))*(space.YinSpace(pivot.vector.y) - space.YinSpace(vertices[0].y)))),red);
+        //canvas.drawCircle((float)(space.XinSpace(pivot.vector.x)),(float)(space.YinSpace(pivot.vector.y)),(float) Math.sqrt(((space.XinSpace(pivot.vector.x) -space.XinSpace(vertices[0].x))*(space.XinSpace(pivot.vector.x) - space.XinSpace(vertices[0].x)) + (space.YinSpace(pivot.vector.y) - space.YinSpace(vertices[0].y))*(space.YinSpace(pivot.vector.y) - space.YinSpace(vertices[0].y)))),red);
     }
 
 }

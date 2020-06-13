@@ -31,8 +31,8 @@ public class MainView extends View {
         lineVertices = new Vertex[2];
         lineEdges = new Edge[1];
 
-        lineVertices[0] = new Vertex(4,4,0);
-        lineVertices[1] = new Vertex(-4,-4,0);
+        lineVertices[0] = new Vertex(4,-4,0);
+        lineVertices[1] = new Vertex(4,-4,0);
 
         lineEdges[0] = new Edge(lineVertices[0], lineVertices[1]);
 
