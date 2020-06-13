@@ -43,6 +43,68 @@ public class SpacialObject {
         }
     }
 
+    public void rotateGlobalX(double angle) {
+        double z1, z2, y1, y2,o,ne;
+        z1 = pivot.vector.z;
+        y1 = pivot.vector.y;
+        double r;
+
+        for (int i = 0; i < vertices.length; i++) {
+            z2 = vertices[i].z;
+            y2 = vertices[i].y;
+
+            r = (z1 - z2) * (z1 - z2) + (y1 - y2) * (y1 - y2);
+            r = Math.sqrt(r);
+
+            o = Math.asin(y1-y2/r);
+
+            if(z2<z1)
+                o = Math.PI - o;
+            else if(y2>y1)
+                o = 2*Math.PI + o;
+
+            ne = Math.toRadians(angle);
+            ne += o;
+
+            vertices[i].z = r * Math.cos(ne);
+            vertices[i].y = -r * Math.sin(ne);
+        }
+    }
+
+    public void rotateGlobalY(double angle) {
+        double x1, x2, z1, z2,o,ne;
+        x1 = pivot.vector.x;
+        z1 = pivot.vector.z;
+        double r;
+
+        for (int i = 0; i < vertices.length; i++) {
+            x2 = vertices[i].x;
+            z2 = vertices[i].z;
+
+            r = (x1 - x2) * (x1 - x2) + (z1 - z2) * (z1 - z2);
+            r = Math.sqrt(r);
+
+            o = Math.asin(z1+z2/r);
+
+            if(x2<x1)
+                o = Math.PI - o;
+            else if(z2<z1)
+                o = 2*Math.PI + o;
+
+            ne = Math.toRadians(angle);
+            ne += o;
+
+            vertices[i].x =  r * Math.cos(ne);
+            vertices[i].z =  r * Math.sin(ne);
+        }
+
+
+        //vertices[i].x = 0;
+        //vertices[i].y = 0;
+
+
+    }
+
     public void rotateGlobalZ(double angle) {
         double x1, x2, y1, y2,o,ne;
         x1 = pivot.vector.x;
@@ -76,6 +138,9 @@ public class SpacialObject {
 
 
     }
+
+
+
 
 
     public void draw(Canvas canvas, Space space){

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.view.View;
 
-public class MainView extends View {
+public class MainView extends View implements Runnable{
 
     double width,height;
     Space space;
@@ -16,6 +16,7 @@ public class MainView extends View {
     Edge[] lineEdges;
     SpacialObject line;
 
+    Thread runthread;
 
 
     float timeStep;
@@ -41,7 +42,7 @@ public class MainView extends View {
         line.edges = lineEdges;
 
         cubeVertices = new Vertex[8];
-        cubeEdges = new Edge[8];
+        cubeEdges = new Edge[12];
 
 
 
@@ -65,13 +66,18 @@ public class MainView extends View {
         cubeEdges[6] = new Edge(cubeVertices[6],cubeVertices[7]);
         cubeEdges[7] = new Edge(cubeVertices[5],cubeVertices[7]);
 
+        cubeEdges[8] = new Edge(cubeVertices[0],cubeVertices[4]);
+        cubeEdges[9] = new Edge(cubeVertices[1],cubeVertices[5]);
+        cubeEdges[10] = new Edge(cubeVertices[2],cubeVertices[6]);
+        cubeEdges[11] = new Edge(cubeVertices[3],cubeVertices[7]);
+
         cube = new SpacialObject(new Pivot(new Vector(0,0,0)));
         cube.vertices = cubeVertices;
         cube.edges = cubeEdges;
 
 
-
-
+        runthread = new Thread(this, "runthread");
+        runthread.start();
     }
 
     @Override
@@ -86,5 +92,20 @@ public class MainView extends View {
     }
 
 
+    @Override
+    public void run() {
+        while (true) {
 
-}
+            cube.rotateGlobalX(0.1f);
+            cube.rotateGlobalY(0.1f);
+            cube.rotateGlobalZ(0.1f);
+
+                try {
+                    Thread.sleep(1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
