@@ -2,23 +2,34 @@ package com.TheGingerMan.spaceobjects;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.View;
+
+import java.util.ArrayList;
 
 public class MainView extends View implements Runnable{
 
     double width,height;
+    Paint black;
     Space space;
-    Vertex[] cubeVertices;
-    Edge[] cubeEdges;
-    SpacialObject cube;
 
-    Vertex[] lineVertices;
-    Edge[] lineEdges;
+///////////////////////////// for testing purposes
+    SpacialObject cube;
+    SpacialObject tri;
+    SpacialObject circle;
+    SpacialObject shap;
+    SpacialObject test;
+
+    ArrayList<Vertex> lineVertices;
+    ArrayList<Edge> lineEdges;
     SpacialObject line;
 
-    Vertex[] triVertices;
-    Edge[] triEdges;
-    SpacialObject tri;
+
+
+    boolean rotLeft,rotRight,rotUp,rotDown;
+///////////////////////////////////////////////////
+
 
 
     Thread runthread;
@@ -32,78 +43,35 @@ public class MainView extends View implements Runnable{
         this.height=height;
 
         space = new Space(width,height);
+        black = new Paint(Color.BLACK);
 
 /////////////////////////////////////////////////////////////////
-        lineVertices = new Vertex[2];
-        lineEdges = new Edge[1];
+        lineVertices = new ArrayList<>();
+        lineEdges = new ArrayList<>();
 
-        lineVertices[0] = new Vertex(width/320,-width/320,0);
-        lineVertices[1] = new Vertex(width/320,-width/320,0);
+        lineVertices.add(new Vertex(width/320,-width/320,0));
+        lineVertices.add(new Vertex(width/320,-width/320,0));
 
-        lineEdges[0] = new Edge(lineVertices[0], lineVertices[1]);
+        lineEdges.add(new Edge(lineVertices.get(0), lineVertices.get(1)));
 
         line = new SpacialObject(new Pivot(new Vector(0,0,0)));
         line.vertices = lineVertices;
         line.edges = lineEdges;
 /////////////////////////////////////////////////////////////////////////////////////////
-        cubeVertices = new Vertex[8];
-        cubeEdges = new Edge[12];
+
+        cube = DefShapes.CUBE(width,height);
+        tri = DefShapes.TRIANGLE(width,height);
+        circle = DefShapes.CIRCLE(width,height);
+        shap = DefShapes.TEST(width,height);
 
 
 
-        cubeVertices[0] = new Vertex(-width/256,width/256,width/1280);// /\----------
-        cubeVertices[1] = new Vertex(width/256,width/256,width/1280); // ----------/\
-        cubeVertices[2] = new Vertex(-width/256,-width/256,width/1280);// \/----------
-        cubeVertices[3] = new Vertex(width/256,-width/256,width/1280);// ----------\/
+///////////////////////////////////////////////////////////////////////////
 
-        cubeVertices[4] = new Vertex(-width/256,width/256,-width/1280);// /\----------
-        cubeVertices[5] = new Vertex(width/256,width/256,-width/1280); // ----------/\
-        cubeVertices[6] = new Vertex(-width/256,-width/256,-width/1280);// \/----------
-        cubeVertices[7] = new Vertex(width/256,-width/256,-width/1280);// ----------\/
+        test = cube;
 
-        cubeEdges[0] = new Edge(cubeVertices[0],cubeVertices[1]);
-        cubeEdges[1] = new Edge(cubeVertices[0],cubeVertices[2]);
-        cubeEdges[2] = new Edge(cubeVertices[2],cubeVertices[3]);
-        cubeEdges[3] = new Edge(cubeVertices[1],cubeVertices[3]);
+        rotDown=rotLeft=rotRight=rotUp=false;
 
-        cubeEdges[4] = new Edge(cubeVertices[4],cubeVertices[5]);
-        cubeEdges[5] = new Edge(cubeVertices[4],cubeVertices[6]);
-        cubeEdges[6] = new Edge(cubeVertices[6],cubeVertices[7]);
-        cubeEdges[7] = new Edge(cubeVertices[5],cubeVertices[7]);
-
-        cubeEdges[8] = new Edge(cubeVertices[0],cubeVertices[4]);
-        cubeEdges[9] = new Edge(cubeVertices[1],cubeVertices[5]);
-        cubeEdges[10] = new Edge(cubeVertices[2],cubeVertices[6]);
-        cubeEdges[11] = new Edge(cubeVertices[3],cubeVertices[7]);
-
-        cube = new SpacialObject(new Pivot(new Vector(0,0,0)));
-        cube.vertices = cubeVertices;
-        cube.edges = cubeEdges;
-
-        ///////////////////////////////////////////////////////////////////////////
-
-        triVertices = new Vertex[5];
-        triVertices[0] = new Vertex(0,-width/256,0);
-        triVertices[1] = new Vertex(-width/640,width/640,width/640);
-        triVertices[2] = new Vertex(-width/640,width/640,-width/640);
-        triVertices[3] = new Vertex(width/640,width/640,-width/640);
-        triVertices[4] = new Vertex(width/640,width/640,width/640);
-
-        triEdges = new Edge[8];
-        triEdges[0] = new Edge(triVertices[1],triVertices[0]);
-        triEdges[1] = new Edge(triVertices[2],triVertices[0]);
-        triEdges[2] = new Edge(triVertices[3],triVertices[0]);
-        triEdges[3] = new Edge(triVertices[4],triVertices[0]);
-        triEdges[4] = new Edge(triVertices[1],triVertices[2]);
-        triEdges[5] = new Edge(triVertices[2],triVertices[3]);
-        triEdges[6] = new Edge(triVertices[3],triVertices[4]);
-        triEdges[7] = new Edge(triVertices[1],triVertices[4]);
-
-        tri = new SpacialObject(new Pivot(new Vector(0,0,0)));
-        tri.vertices = triVertices;
-        tri.edges = triEdges;
-
-        ///////////////////////////////////////////////////////////////////////////
         runthread = new Thread(this, "runthread");
         runthread.start();
     }
@@ -112,10 +80,14 @@ public class MainView extends View implements Runnable{
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        //canvas.drawRect(0,0,(float)width,(float)height,black); //draws the black background
+
+
         space.draw(canvas);
         //line.draw(canvas, space);
         //cube.draw(canvas,space);
-        tri.draw(canvas,space);
+        //tri.draw(canvas,space);
+        test.draw(canvas,space);
 
         invalidate();
     }
@@ -125,9 +97,16 @@ public class MainView extends View implements Runnable{
     public void run() {
         while (true) {
 
-           tri.rotateGlobalX(0.1f);
-           tri.rotateGlobalY(0.1f);
-           tri.rotateGlobalZ(0.1f);
+            if(rotLeft)
+                test.rotateGlobalY(.1f);
+            if(rotRight)
+                test.rotateGlobalY(-.1f);
+
+            if(rotUp)
+                test.rotateGlobalX(-.1f);
+            if(rotDown)
+                test.rotateGlobalX(.1f);
+
 
                 try {
                     Thread.sleep(1);

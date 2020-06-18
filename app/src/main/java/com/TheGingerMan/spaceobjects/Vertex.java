@@ -11,6 +11,6 @@ public class Vertex extends Vector{
 
 
     public void draw(Canvas canvas, Paint p, Space space){
-        canvas.drawCircle((float)(space.XinSpace(x)),(float)(space.YinSpace(y)),20,p);
+        canvas.drawCircle((float)(space.XinSpace(x)),(float)(space.YinSpace(y)),space.radiusVert,p);
     }
 }

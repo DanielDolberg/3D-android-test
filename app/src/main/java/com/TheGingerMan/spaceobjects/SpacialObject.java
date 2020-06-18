@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public class SpacialObject {
 
     Pivot pivot;
-    Vertex[] vertices;
-    Edge[] edges;
+    ArrayList<Vertex> vertices;
+    ArrayList<Edge> edges;
     Space localSpace;
     Paint red;
     Paint blue;
@@ -36,10 +36,10 @@ public class SpacialObject {
         pivot.vector.y+=dy;
         pivot.vector.z+=dz;
 
-        for (int i = 0; i < vertices.length ; i++) {
-            vertices[i].x+=dx;
-            vertices[i].y+=dy;
-            vertices[i].z+=dz;
+        for (int i = 0; i < vertices.size() ; i++) {
+            vertices.get(i).x+=dx;
+            vertices.get(i).y+=dy;
+            vertices.get(i).z+=dz;
         }
     }
 
@@ -49,9 +49,9 @@ public class SpacialObject {
         y1 = pivot.vector.y;
         double r;
 
-        for (int i = 0; i < vertices.length; i++) {
-            z2 = vertices[i].z;
-            y2 = vertices[i].y;
+        for (int i = 0; i < vertices.size(); i++) {
+            z2 = vertices.get(i).z;
+            y2 = vertices.get(i).y;
 
             r = (z1 - z2) * (z1 - z2) + (y1 - y2) * (y1 - y2);
             r = Math.sqrt(r);
@@ -66,8 +66,8 @@ public class SpacialObject {
             ne = Math.toRadians(angle);
             ne += o;
 
-            vertices[i].z = r * Math.cos(ne);
-            vertices[i].y = -r * Math.sin(ne);
+            vertices.get(i).z = r * Math.cos(ne);
+            vertices.get(i).y = -r * Math.sin(ne);
         }
     }
 
@@ -77,9 +77,9 @@ public class SpacialObject {
         z1 = pivot.vector.z;
         double r;
 
-        for (int i = 0; i < vertices.length; i++) {
-            x2 = vertices[i].x;
-            z2 = vertices[i].z;
+        for (int i = 0; i < vertices.size(); i++) {
+            x2 = vertices.get(i).x;
+            z2 = vertices.get(i).z;
 
             r = (x1 - x2) * (x1 - x2) + (z1 - z2) * (z1 - z2);
             r = Math.sqrt(r);
@@ -94,8 +94,8 @@ public class SpacialObject {
             ne = Math.toRadians(angle);
             ne += o;
 
-            vertices[i].x =  r * Math.cos(ne);
-            vertices[i].z =  r * Math.sin(ne);
+            vertices.get(i).x =  r * Math.cos(ne);
+            vertices.get(i).z =  r * Math.sin(ne);
         }
 
 
@@ -111,9 +111,9 @@ public class SpacialObject {
         y1 = pivot.vector.y;
         double r;
 
-        for (int i = 0; i < vertices.length; i++) {
-            x2 = vertices[i].x;
-            y2 = vertices[i].y;
+        for (int i = 0; i < vertices.size(); i++) {
+            x2 = vertices.get(i).x;
+            y2 = vertices.get(i).y;
 
             r = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
             r = Math.sqrt(r);
@@ -128,8 +128,8 @@ public class SpacialObject {
             ne = Math.toRadians(angle);
             ne += o;
 
-            vertices[i].x = r * Math.cos(ne);
-            vertices[i].y = -r * Math.sin(ne);
+            vertices.get(i).x = r * Math.cos(ne);
+            vertices.get(i).y = -r * Math.sin(ne);
         }
 
 
@@ -145,15 +145,15 @@ public class SpacialObject {
 
     public void draw(Canvas canvas, Space space){
 
-        for (int i = 0; i < edges.length ; i++) {
-            edges[i].draw(canvas,red,space);
+        for (int i = 0; i < edges.size() ; i++) {
+            edges.get(i).draw(canvas,red,space);
         }
 
-        for (int i = 0; i < vertices.length; i++) {
-            vertices[i].draw(canvas,blue,space);
+        for (int i = 0; i < vertices.size(); i++) {
+            vertices.get(i).draw(canvas,blue,space);
         }
 
-        //canvas.drawCircle((float)(space.XinSpace(pivot.vector.x)),(float)(space.YinSpace(pivot.vector.y)),(float) Math.sqrt(((space.XinSpace(pivot.vector.x) -space.XinSpace(vertices[0].x))*(space.XinSpace(pivot.vector.x) - space.XinSpace(vertices[0].x)) + (space.YinSpace(pivot.vector.y) - space.YinSpace(vertices[0].y))*(space.YinSpace(pivot.vector.y) - space.YinSpace(vertices[0].y)))),red);
+        //canvas.drawCircle((float)(space.XinSpace(pivot.vector.x)),(float)(space.YinSpace(pivot.vector.y)),(float) Math.sqrt(((space.XinSpace(pivot.vector.x) -space.XinSpace(vertices.get(0).x))*(space.XinSpace(pivot.vector.x) - space.XinSpace(vertices.get(0).x)) + (space.YinSpace(pivot.vector.y) - space.YinSpace(vertices.get(0).y))*(space.YinSpace(pivot.vector.y) - space.YinSpace(vertices.get(0).y)))),red);
     }
 
 }

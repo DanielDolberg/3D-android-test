@@ -11,6 +11,8 @@ import android.view.WindowManager;
 public class MainActivity extends AppCompatActivity {
 
     MainView mainView;
+    double width;
+    double height;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        double width = size.x;
-        double height = size.y;
+        width = size.x;
+        height = size.y;
 
         mainView = new MainView(this, width, height);
         setContentView(mainView);
@@ -36,7 +38,17 @@ public class MainActivity extends AppCompatActivity {
 
         switch (eventaction) {
             case MotionEvent.ACTION_DOWN:
-                //mainView.cube.move(1,1,0);
+
+                    if(x<width/3)
+                        mainView.rotLeft = true;
+                    if(x>width-width/3)
+                        mainView.rotRight = true;
+
+                    if(y<height/3)
+                        mainView.rotUp = true;
+                    if(y>height-height/3)
+                        mainView.rotDown = true;
+
                 break;
 
             case MotionEvent.ACTION_MOVE:
@@ -46,6 +58,15 @@ public class MainActivity extends AppCompatActivity {
 
 
             case MotionEvent.ACTION_UP:
+                if(x<width/3)
+                    mainView.rotLeft = false;
+                if(x>width-width/3)
+                    mainView.rotRight = false;
+
+                if(y<height/3)
+                    mainView.rotUp = false;
+                if(y>height-height/3)
+                    mainView.rotDown = false;
                 break;
         }
         return true;
