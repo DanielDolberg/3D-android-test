@@ -19,6 +19,9 @@ public class SpacialObject {
     public SpacialObject(Pivot pivot) {
         this.pivot = pivot;
 
+        vertices = new ArrayList<>();
+        edges = new ArrayList<>();
+
 
         red = new Paint();
         red.setColor(Color.RED);

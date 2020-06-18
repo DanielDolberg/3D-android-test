@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class MainView extends View implements Runnable{
 
     double width,height;
-    Paint black;
+    Paint BackGroundColor;
     Space space;
 
 ///////////////////////////// for testing purposes
@@ -19,6 +19,8 @@ public class MainView extends View implements Runnable{
     SpacialObject tri;
     SpacialObject circle;
     SpacialObject shap;
+    SpacialObject plane;
+    SpacialObject sphere;
     SpacialObject test;
 
     ArrayList<Vertex> lineVertices;
@@ -43,7 +45,7 @@ public class MainView extends View implements Runnable{
         this.height=height;
 
         space = new Space(width,height);
-        black = new Paint(Color.BLACK);
+        BackGroundColor = new Paint(Color.GRAY);
 
 /////////////////////////////////////////////////////////////////
         lineVertices = new ArrayList<>();
@@ -62,13 +64,16 @@ public class MainView extends View implements Runnable{
         cube = DefShapes.CUBE(width,height);
         tri = DefShapes.TRIANGLE(width,height);
         circle = DefShapes.CIRCLE(width,height);
+        plane = DefShapes.PLANE(width,height);
+        //sphere = DefShapes.SPHERE(width,height);
+
         shap = DefShapes.TEST(width,height);
 
 
 
 ///////////////////////////////////////////////////////////////////////////
 
-        test = cube;
+        test = shap;
 
         rotDown=rotLeft=rotRight=rotUp=false;
 
@@ -106,7 +111,6 @@ public class MainView extends View implements Runnable{
                 test.rotateGlobalX(-.1f);
             if(rotDown)
                 test.rotateGlobalX(.1f);
-
 
                 try {
                     Thread.sleep(1);
