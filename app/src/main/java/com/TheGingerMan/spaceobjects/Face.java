@@ -51,5 +51,6 @@ public class Face {
     public void draw(Canvas canvas)
     {
         canvas.drawPath(path, paint);
+        canvas.clipOutPath(path);
     }
 }

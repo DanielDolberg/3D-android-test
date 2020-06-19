@@ -129,6 +129,20 @@ public class DefShapes {
         f.vertices.add(cubeVertices.get(5));
         f.vertices.add(cubeVertices.get(7));
         f.vertices.add(cubeVertices.get(6));
+
+        cubeFaces.add(new Face(Color.MAGENTA));
+        f = cubeFaces.get(4);
+        f.vertices.add(cubeVertices.get(0));
+        f.vertices.add(cubeVertices.get(1));
+        f.vertices.add(cubeVertices.get(5));
+        f.vertices.add(cubeVertices.get(4));
+
+        cubeFaces.add(new Face(Color.YELLOW));
+        f = cubeFaces.get(5);
+        f.vertices.add(cubeVertices.get(2));
+        f.vertices.add(cubeVertices.get(3));
+        f.vertices.add(cubeVertices.get(7));
+        f.vertices.add(cubeVertices.get(6));
         /////////////////////////////////////////////////////////////////faces
 
         cube = new SpacialObject(new Pivot(new Vector(0,0,0)));
