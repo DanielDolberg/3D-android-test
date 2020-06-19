@@ -108,6 +108,27 @@ public class DefShapes {
         f.vertices.add(cubeVertices.get(1));
         f.vertices.add(cubeVertices.get(3));
         f.vertices.add(cubeVertices.get(2));
+
+        cubeFaces.add(new Face(Color.RED));
+        f = cubeFaces.get(1);
+        f.vertices.add(cubeVertices.get(0));
+        f.vertices.add(cubeVertices.get(4));
+        f.vertices.add(cubeVertices.get(6));
+        f.vertices.add(cubeVertices.get(2));
+
+        cubeFaces.add(new Face(Color.GREEN));
+        f = cubeFaces.get(2);
+        f.vertices.add(cubeVertices.get(1));
+        f.vertices.add(cubeVertices.get(5));
+        f.vertices.add(cubeVertices.get(7));
+        f.vertices.add(cubeVertices.get(3));
+
+        cubeFaces.add(new Face(Color.BLUE));
+        f = cubeFaces.get(3);
+        f.vertices.add(cubeVertices.get(4));
+        f.vertices.add(cubeVertices.get(5));
+        f.vertices.add(cubeVertices.get(7));
+        f.vertices.add(cubeVertices.get(6));
         /////////////////////////////////////////////////////////////////faces
 
         cube = new SpacialObject(new Pivot(new Vector(0,0,0)));

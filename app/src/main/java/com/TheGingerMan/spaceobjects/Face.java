@@ -18,7 +18,8 @@ public class Face {
     {
 
         vertices = new ArrayList<>();
-        paint = new Paint(color);
+        paint = new Paint();
+        paint.setColor(color);
         paint.setStyle(Paint.Style.FILL);
         path = new Path();
 
