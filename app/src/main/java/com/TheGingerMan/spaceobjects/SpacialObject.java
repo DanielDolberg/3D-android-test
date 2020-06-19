@@ -12,6 +12,7 @@ public class SpacialObject {
     ArrayList<Vertex> vertices;
     ArrayList<Edge> edges;
     ArrayList<Face> faces;
+    Space globalSpace;
     Space localSpace;
     Paint red;
     Paint blue;
@@ -74,6 +75,7 @@ public class SpacialObject {
             vertices.get(i).z = r * Math.cos(ne);
             vertices.get(i).y = -r * Math.sin(ne);
         }
+        updateFaces();
     }
 
     public void rotateGlobalY(double angle) {
@@ -102,6 +104,7 @@ public class SpacialObject {
             vertices.get(i).x =  r * Math.cos(ne);
             vertices.get(i).z =  r * Math.sin(ne);
         }
+        updateFaces();
     }
 
     public void rotateGlobalZ(double angle) {
@@ -130,11 +133,18 @@ public class SpacialObject {
             vertices.get(i).x = r * Math.cos(ne);
             vertices.get(i).y = -r * Math.sin(ne);
         }
+        updateFaces();
     }
 
 
 
 
+    public void updateFaces(){
+
+        for (int i = 0; i < faces.size(); i++) {
+            faces.get(i).setPath(globalSpace);
+        }
+    }
 
     public void draw(Canvas canvas, Space space){
 

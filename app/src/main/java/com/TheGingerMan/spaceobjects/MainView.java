@@ -74,12 +74,12 @@ public class MainView extends View implements Runnable{
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-        test = plane;
+        test = cube;
 
+        test.globalSpace = space;
         ArrayList<Face> curF = test.faces;
 
-        for (int i = 0; i < curF.size(); i++)
-            curF.get(i).setPath(space);
+        test.updateFaces();
 
 
 

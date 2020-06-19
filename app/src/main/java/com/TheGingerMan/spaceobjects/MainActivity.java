@@ -52,20 +52,35 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case MotionEvent.ACTION_MOVE:
+                if(x<width/3)
+                    mainView.rotLeft = true;
+                else
+                    mainView.rotLeft = false;
+
+                if(x>width-width/3)
+                    mainView.rotRight = true;
+                else
+                    mainView.rotRight = false;
+
+                if(y<height/3)
+                    mainView.rotUp = true;
+                else
+                    mainView.rotUp = false;
+
+                if(y>height-height/3)
+                    mainView.rotDown = true;
+                else
+                    mainView.rotDown = false;
+
                 break;
 
 
 
 
             case MotionEvent.ACTION_UP:
-                if(x<width/3)
                     mainView.rotLeft = false;
-                if(x>width-width/3)
                     mainView.rotRight = false;
-
-                if(y<height/3)
                     mainView.rotUp = false;
-                if(y>height-height/3)
                     mainView.rotDown = false;
                 break;
         }

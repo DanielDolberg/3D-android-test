@@ -26,11 +26,14 @@ public class Face {
 
     public void setPath(Space space){
 
-        path.moveTo((float)space.XinSpace(vertices.get(0).x),(float)space.YinSpace(vertices.get(0).y));
-        path.lineTo((float)space.XinSpace(vertices.get(1).x),(float)space.YinSpace(vertices.get(1).y));
-        path.lineTo((float)space.XinSpace(vertices.get(2).x),(float)space.YinSpace(vertices.get(2).y));
-        path.lineTo((float)space.XinSpace(vertices.get(3).x),(float)space.YinSpace(vertices.get(3).y));
-        path.close();
+        if(vertices != null) {
+            path.rewind();
+            path.moveTo((float) space.XinSpace(vertices.get(0).x), (float) space.YinSpace(vertices.get(0).y));
+            for (int i = 1; i <vertices.size() ; i++) {
+                path.lineTo((float) space.XinSpace(vertices.get(i).x), (float) space.YinSpace(vertices.get(i).y));
+            }
+            path.close();
+        }
 
         /*
         path.moveTo(500,500);

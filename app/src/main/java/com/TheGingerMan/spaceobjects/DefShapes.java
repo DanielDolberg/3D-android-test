@@ -77,7 +77,7 @@ public class DefShapes {
         cubeVertices.add(new Vertex(-x,x,x));// \/---------- 2
         cubeVertices.add(new Vertex(x,x,x));// ----------\/ 3
 
-        cubeVertices.add(new Vertex(-2*x,-x,-x));// /\---------- 4
+        cubeVertices.add(new Vertex(-x,-x,-x));// /\---------- 4
         cubeVertices.add(new Vertex(x,-x,-x)); // ----------/\ 5
         cubeVertices.add(new Vertex(-x,x,-x));// \/---------- 6
         cubeVertices.add(new Vertex(x,x,-x));// ----------\/ 7
@@ -113,6 +113,7 @@ public class DefShapes {
         cube = new SpacialObject(new Pivot(new Vector(0,0,0)));
         cube.vertices = cubeVertices;
         cube.edges = cubeEdges;
+        cube.faces = cubeFaces;
 
         return cube;
     }
