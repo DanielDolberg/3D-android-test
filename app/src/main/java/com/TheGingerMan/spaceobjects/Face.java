@@ -14,6 +14,8 @@ public class Face {
     Paint paint;
     Picture picture;
 
+    double x,y,z;
+
     public Face(int color)
     {
 
@@ -34,23 +36,37 @@ public class Face {
                 path.lineTo((float) space.XinSpace(vertices.get(i).x), (float) space.YinSpace(vertices.get(i).y));
             }
             path.close();
+
+            setAverages();
+            System.out.println("deeeeee "+x+" "+y+" "+z);
+        }
+    }
+
+    public void setAverages()
+    {
+        double c=0;
+        for (int i = 0; i < vertices.size(); i++) {
+            c+=vertices.get(i).x;
         }
 
-        /*
-        path.moveTo(500,500);
-        path.lineTo(600,400);
-        path.lineTo(700,500);
-        path.lineTo(700,800);
-        path.lineTo(500,800);
-        path.lineTo(500,500);
-        path.close();
+        x = c/vertices.size();
 
-         */
+        c=0;
+        for (int i = 0; i < vertices.size(); i++) {
+            c+=vertices.get(i).y;
+        }
+        y = c/vertices.size();
+
+        c=0;
+        for (int i = 0; i < vertices.size(); i++) {
+            c+=vertices.get(i).z;
+        }
+        z = c/vertices.size();
     }
 
     public void draw(Canvas canvas)
     {
         canvas.drawPath(path, paint);
-        canvas.clipOutPath(path);
+        //canvas.clipOutPath(path);
     }
 }
