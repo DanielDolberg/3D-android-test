@@ -1,5 +1,7 @@
 package com.TheGingerMan.spaceobjects;
 
+import android.graphics.Color;
+
 import java.util.ArrayList;
 
 import javax.crypto.Cipher;
@@ -13,18 +15,21 @@ public class DefShapes {
     {
         ArrayList<Vertex> planeVertices;
         ArrayList<Edge> planeEdges;
+        Face face;
+
         SpacialObject plane;
+
+
 
         planeVertices = new ArrayList<>();
         planeEdges = new ArrayList<>();
 
-
         double x = 5;
 
-        planeVertices.add(new Vertex(-x,x,0));// /\----------
-        planeVertices.add(new Vertex(x,x,0)); // ----------/\
-        planeVertices.add(new Vertex(-x,-x,0));// \/----------
-        planeVertices.add(new Vertex(x,-x,0));// ----------\/
+        planeVertices.add(new Vertex(-x,x,0));// /\----------   0
+        planeVertices.add(new Vertex(x,x,0)); // ----------/\   1
+        planeVertices.add(new Vertex(-x,-x,0));// \/----------  2
+        planeVertices.add(new Vertex(x,-x,0));// ----------\/   3
 
 
         planeEdges.add(new Edge(planeVertices.get(0),planeVertices.get(1)));
@@ -32,10 +37,19 @@ public class DefShapes {
         planeEdges.add(new Edge(planeVertices.get(2),planeVertices.get(3)));
         planeEdges.add(new Edge(planeVertices.get(1),planeVertices.get(3)));
 
+        face = new Face(Color.BLUE);
+        face.vertices.add(planeVertices.get(0));
+        face.vertices.add(planeVertices.get(1));
+        face.vertices.add(planeVertices.get(3));
+        face.vertices.add(planeVertices.get(2));
+
+
+
 
         plane = new SpacialObject(new Pivot(new Vector(0,0,0)));
         plane.vertices = planeVertices;
         plane.edges = planeEdges;
+        plane.faces.add(face);
 
         return plane;
     }
@@ -44,24 +58,32 @@ public class DefShapes {
     {
         ArrayList<Vertex> cubeVertices;
         ArrayList<Edge> cubeEdges;
+        ArrayList<Face> cubeFaces;
         SpacialObject cube;
+        Face f;
 
         cubeVertices = new ArrayList<>();
         cubeEdges = new ArrayList<>();
+        cubeFaces = new ArrayList<>();
+
 
 
         double x = 5;
 
-        cubeVertices.add(new Vertex(-x,-x,x));// /\----------
-        cubeVertices.add(new Vertex(x,-x,x)); // ----------/\
-        cubeVertices.add(new Vertex(-x,x,x));// \/----------
-        cubeVertices.add(new Vertex(x,x,x));// ----------\/
 
-        cubeVertices.add(new Vertex(-x,-x,-x));// /\----------
-        cubeVertices.add(new Vertex(x,-x,-x)); // ----------/\
-        cubeVertices.add(new Vertex(-x,x,-x));// \/----------
-        cubeVertices.add(new Vertex(x,x,-x));// ----------\/
+        /////////////////////////////////////////////////////////////////vertecies
+        cubeVertices.add(new Vertex(-x,-x,x));// /\---------- 0
+        cubeVertices.add(new Vertex(x,-x,x)); // ----------/\ 1
+        cubeVertices.add(new Vertex(-x,x,x));// \/---------- 2
+        cubeVertices.add(new Vertex(x,x,x));// ----------\/ 3
 
+        cubeVertices.add(new Vertex(-2*x,-x,-x));// /\---------- 4
+        cubeVertices.add(new Vertex(x,-x,-x)); // ----------/\ 5
+        cubeVertices.add(new Vertex(-x,x,-x));// \/---------- 6
+        cubeVertices.add(new Vertex(x,x,-x));// ----------\/ 7
+        /////////////////////////////////////////////////////////////////vertecies
+
+        /////////////////////////////////////////////////////////////////edges
         cubeEdges.add(new Edge(cubeVertices.get(0),cubeVertices.get(1)));
         cubeEdges.add(new Edge(cubeVertices.get(0),cubeVertices.get(2)));
         cubeEdges.add(new Edge(cubeVertices.get(2),cubeVertices.get(3)));
@@ -76,6 +98,17 @@ public class DefShapes {
         cubeEdges.add(new Edge(cubeVertices.get(1),cubeVertices.get(5)));
         cubeEdges.add(new Edge(cubeVertices.get(2),cubeVertices.get(6)));
         cubeEdges.add(new Edge(cubeVertices.get(3),cubeVertices.get(7)));
+        /////////////////////////////////////////////////////////////////edges
+
+
+        /////////////////////////////////////////////////////////////////faces
+        cubeFaces.add(new Face(Color.BLACK));
+        f = cubeFaces.get(0);
+        f.vertices.add(cubeVertices.get(0));
+        f.vertices.add(cubeVertices.get(1));
+        f.vertices.add(cubeVertices.get(3));
+        f.vertices.add(cubeVertices.get(2));
+        /////////////////////////////////////////////////////////////////faces
 
         cube = new SpacialObject(new Pivot(new Vector(0,0,0)));
         cube.vertices = cubeVertices;
@@ -157,7 +190,7 @@ public class DefShapes {
 
     public static SpacialObject SPHERE(double width,double height)
     {
-        SpacialObject sphere = new SpacialObject(new Pivot(new Vector(0,0,0)));
+        SpacialObject sphere;
 
         sphere = new SpacialObject(new Pivot(new Vector(0,0,0)));
 
@@ -191,7 +224,9 @@ public class DefShapes {
         ArrayList<Vertex> triVertices;
         ArrayList<Edge> triEdges;
         SpacialObject tri;
+        Pivot p = new Pivot(new Vector(0,0,0));
 
+        tri = new SpacialObject(p);
 
 
         return  tri;

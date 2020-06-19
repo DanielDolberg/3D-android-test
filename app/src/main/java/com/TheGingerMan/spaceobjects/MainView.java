@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -71,9 +72,16 @@ public class MainView extends View implements Runnable{
 
 
 
-///////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
-        test = shap;
+        test = plane;
+
+        ArrayList<Face> curF = test.faces;
+
+        for (int i = 0; i < curF.size(); i++)
+            curF.get(i).setPath(space);
+
+
 
         rotDown=rotLeft=rotRight=rotUp=false;
 
@@ -92,7 +100,25 @@ public class MainView extends View implements Runnable{
         //line.draw(canvas, space);
         //cube.draw(canvas,space);
         //tri.draw(canvas,space);
+
         test.draw(canvas,space);
+
+
+        /*
+        Path path = new Path();
+        path.moveTo(500,500);
+        path.lineTo(600,400);
+        path.lineTo(700,500);
+        path.lineTo(700,800);
+        path.lineTo(500,800);
+        path.lineTo(500,500);
+        path.close();
+        canvas.drawPath(path,BackGroundColor);
+
+         */
+
+
+
 
         invalidate();
     }

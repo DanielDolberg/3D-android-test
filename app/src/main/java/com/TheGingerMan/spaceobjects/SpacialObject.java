@@ -11,6 +11,7 @@ public class SpacialObject {
     Pivot pivot;
     ArrayList<Vertex> vertices;
     ArrayList<Edge> edges;
+    ArrayList<Face> faces;
     Space localSpace;
     Paint red;
     Paint blue;
@@ -21,6 +22,7 @@ public class SpacialObject {
 
         vertices = new ArrayList<>();
         edges = new ArrayList<>();
+        faces = new ArrayList<>();
 
 
         red = new Paint();
@@ -100,12 +102,6 @@ public class SpacialObject {
             vertices.get(i).x =  r * Math.cos(ne);
             vertices.get(i).z =  r * Math.sin(ne);
         }
-
-
-        //vertices[i].x = 0;
-        //vertices[i].y = 0;
-
-
     }
 
     public void rotateGlobalZ(double angle) {
@@ -134,12 +130,6 @@ public class SpacialObject {
             vertices.get(i).x = r * Math.cos(ne);
             vertices.get(i).y = -r * Math.sin(ne);
         }
-
-
-        //vertices[i].x = 0;
-        //vertices[i].y = 0;
-
-
     }
 
 
@@ -147,6 +137,10 @@ public class SpacialObject {
 
 
     public void draw(Canvas canvas, Space space){
+
+        for (int i = 0; i < faces.size(); i++) {
+            faces.get(i).draw(canvas);
+        }
 
         for (int i = 0; i < edges.size() ; i++) {
             edges.get(i).draw(canvas,red,space);
