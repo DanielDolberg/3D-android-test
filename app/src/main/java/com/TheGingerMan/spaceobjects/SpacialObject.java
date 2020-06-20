@@ -14,9 +14,10 @@ public class SpacialObject {
     ArrayList<Face> faces;
     ArrayList<Face> facesInDrawingOrder;
     Space globalSpace;
-    Space localSpace;
     Paint red;
     Paint blue;
+
+    int state; //1=wireframe 2=solid 3=material only
 
     boolean candraw;
 
@@ -39,24 +40,23 @@ public class SpacialObject {
         blue.setColor(Color.BLUE);
         blue.setStrokeWidth(20);
 
-        candraw = false;
+        state = 2;
     }
 
-    public void move(float dx, float dy,float dz)
-    {
-        pivot.vector.x+=dx;
-        pivot.vector.y+=dy;
-        pivot.vector.z+=dz;
+    public void move(float dx, float dy, float dz) {
+        pivot.vector.x += dx;
+        pivot.vector.y += dy;
+        pivot.vector.z += dz;
 
-        for (int i = 0; i < vertices.size() ; i++) {
-            vertices.get(i).x+=dx;
-            vertices.get(i).y+=dy;
-            vertices.get(i).z+=dz;
+        for (int i = 0; i < vertices.size(); i++) {
+            vertices.get(i).x += dx;
+            vertices.get(i).y += dy;
+            vertices.get(i).z += dz;
         }
     }
 
     public void rotateGlobalX(double angle) {
-        double z1, z2, y1, y2,o,ne;
+        double z1, z2, y1, y2, o, ne;
         z1 = pivot.vector.z;
         y1 = pivot.vector.y;
         double r;
@@ -68,12 +68,12 @@ public class SpacialObject {
             r = (z1 - z2) * (z1 - z2) + (y1 - y2) * (y1 - y2);
             r = Math.sqrt(r);
 
-            o = Math.asin(y1-y2/r);
+            o = Math.asin(y1 - y2 / r);
 
-            if(z2<z1)
+            if (z2 < z1)
                 o = Math.PI - o;
-            else if(y2>y1)
-                o = 2*Math.PI + o;
+            else if (y2 > y1)
+                o = 2 * Math.PI + o;
 
             ne = Math.toRadians(angle);
             ne += o;
@@ -81,11 +81,11 @@ public class SpacialObject {
             vertices.get(i).z = r * Math.cos(ne);
             vertices.get(i).y = -r * Math.sin(ne);
         }
-       // updateFaces();
+        // updateFaces();
     }
 
     public void rotateGlobalY(double angle) {
-        double x1, x2, z1, z2,o,ne;
+        double x1, x2, z1, z2, o, ne;
         x1 = pivot.vector.x;
         z1 = pivot.vector.z;
         double r;
@@ -97,24 +97,24 @@ public class SpacialObject {
             r = (x1 - x2) * (x1 - x2) + (z1 - z2) * (z1 - z2);
             r = Math.sqrt(r);
 
-            o = Math.asin(z1+z2/r);
+            o = Math.asin(z1 + z2 / r);
 
-            if(x2<x1)
+            if (x2 < x1)
                 o = Math.PI - o;
-            else if(z2<z1)
-                o = 2*Math.PI + o;
+            else if (z2 < z1)
+                o = 2 * Math.PI + o;
 
             ne = Math.toRadians(angle);
             ne += o;
 
-            vertices.get(i).x =  r * Math.cos(ne);
-            vertices.get(i).z =  r * Math.sin(ne);
+            vertices.get(i).x = r * Math.cos(ne);
+            vertices.get(i).z = r * Math.sin(ne);
         }
         //updateFaces();
     }
 
     public void rotateGlobalZ(double angle) {
-        double x1, x2, y1, y2,o,ne;
+        double x1, x2, y1, y2, o, ne;
         x1 = pivot.vector.x;
         y1 = pivot.vector.y;
         double r;
@@ -126,12 +126,12 @@ public class SpacialObject {
             r = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
             r = Math.sqrt(r);
 
-            o = Math.asin(y1-y2/r);
+            o = Math.asin(y1 - y2 / r);
 
-            if(x2<x1)
+            if (x2 < x1)
                 o = Math.PI - o;
-            else if(y2>y1)
-                o = 2*Math.PI + o;
+            else if (y2 > y1)
+                o = 2 * Math.PI + o;
 
             ne = Math.toRadians(angle);
             ne += o;
@@ -143,53 +143,53 @@ public class SpacialObject {
     }
 
 
-
-
-    public void updateFaces(){
+    public void updateFaces() {
         facesInDrawingOrder = new ArrayList<>();
         for (int i = 0; i < faces.size(); i++) {
             facesInDrawingOrder.add(null);
         }
-        
+
         Face f;
         int c;
 
         for (int i = 0; i < faces.size(); i++) {
-            f=faces.get(i);
-            c=0;
+            f = faces.get(i);
+            c = 0;
             f.setPath(globalSpace);
             for (int j = 0; j < faces.size(); j++) {
-             if(f.z > faces.get(j).z)
-                 c++;
-               // System.out.println("deeeeee "+i +" "+ j +" "+ c);
+                if (f.z > faces.get(j).z)
+                    c++;
             }
-            facesInDrawingOrder.set(c,f);
+            facesInDrawingOrder.set(c, f);
         }
 
-        candraw = true;
-    }
+    } //REQUIRES SERIOUS TWEAKING
 
-    public void draw(Canvas canvas, Space space){
+    public void draw(Canvas canvas, Space space) {
 
         updateFaces();
         Face f;
+
+        if(state!=1) {
             for (int i = 0; i < facesInDrawingOrder.size(); i++) {
                 f = facesInDrawingOrder.get(i);
                 if (f != null) {
                     f.draw(canvas);
                 }
             }
-
-        /*
-        for (int i = 0; i < edges.size() ; i++) {
-            edges.get(i).draw(canvas,red,space);
         }
 
-        for (int i = 0; i < vertices.size(); i++) {
-            vertices.get(i).draw(canvas,blue,space);
+        if(state!=3) {
+            for (int i = 0; i < edges.size(); i++) {
+                edges.get(i).draw(canvas, red, space);
+            }
+
+            for (int i = 0; i < vertices.size(); i++) {
+                vertices.get(i).draw(canvas, blue, space);
+            }
         }
 
-         */
+
 
         //canvas.drawCircle((float)(space.XinSpace(pivot.vector.x)),(float)(space.YinSpace(pivot.vector.y)),(float) Math.sqrt(((space.XinSpace(pivot.vector.x) -space.XinSpace(vertices.get(0).x))*(space.XinSpace(pivot.vector.x) - space.XinSpace(vertices.get(0).x)) + (space.YinSpace(pivot.vector.y) - space.YinSpace(vertices.get(0).y))*(space.YinSpace(pivot.vector.y) - space.YinSpace(vertices.get(0).y)))),red);
     }

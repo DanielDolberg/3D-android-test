@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     MainView mainView;
     double width;
     double height;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,35 +40,35 @@ public class MainActivity extends AppCompatActivity {
         switch (eventaction) {
             case MotionEvent.ACTION_DOWN:
 
-                    if(x<width/3)
-                        mainView.rotLeft = true;
-                    if(x>width-width/3)
-                        mainView.rotRight = true;
+                if (x < width / 3)
+                    mainView.rotLeft = true;
+                if (x > width - width / 3)
+                    mainView.rotRight = true;
 
-                    if(y<height/3)
-                        mainView.rotUp = true;
-                    if(y>height-height/3)
-                        mainView.rotDown = true;
+                if (y < height / 3)
+                    mainView.rotUp = true;
+                if (y > height - height / 3)
+                    mainView.rotDown = true;
 
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                if(x<width/3)
+                if (x < width / 3)
                     mainView.rotLeft = true;
                 else
                     mainView.rotLeft = false;
 
-                if(x>width-width/3)
+                if (x > width - width / 3)
                     mainView.rotRight = true;
                 else
                     mainView.rotRight = false;
 
-                if(y<height/3)
+                if (y < height / 3)
                     mainView.rotUp = true;
                 else
                     mainView.rotUp = false;
 
-                if(y>height-height/3)
+                if (y > height - height / 3)
                     mainView.rotDown = true;
                 else
                     mainView.rotDown = false;
@@ -75,13 +76,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
 
-
-
             case MotionEvent.ACTION_UP:
-                    mainView.rotLeft = false;
-                    mainView.rotRight = false;
-                    mainView.rotUp = false;
-                    mainView.rotDown = false;
+                mainView.rotLeft = false;
+                mainView.rotRight = false;
+                mainView.rotUp = false;
+                mainView.rotDown = false;
                 break;
         }
         return true;

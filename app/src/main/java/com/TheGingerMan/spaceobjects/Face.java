@@ -14,10 +14,9 @@ public class Face {
     Paint paint;
     Picture picture;
 
-    double x,y,z;
+    double x, y, z;
 
-    public Face(int color)
-    {
+    public Face(int color) {
 
         vertices = new ArrayList<>();
         paint = new Paint();
@@ -27,45 +26,43 @@ public class Face {
 
     }
 
-    public void setPath(Space space){
+    public void setPath(Space space) {
 
-        if(vertices != null) {
+        if (vertices != null) {
             path.rewind();
             path.moveTo((float) space.XinSpace(vertices.get(0).x), (float) space.YinSpace(vertices.get(0).y));
-            for (int i = 1; i <vertices.size() ; i++) {
+            for (int i = 1; i < vertices.size(); i++) {
                 path.lineTo((float) space.XinSpace(vertices.get(i).x), (float) space.YinSpace(vertices.get(i).y));
             }
             path.close();
 
             setAverages();
-           // System.out.println("deeeeee "+x+" "+y+" "+z);
+            // System.out.println("deeeeee "+x+" "+y+" "+z);
         }
     }
 
-    public void setAverages()
-    {
-        double c=0;
+    public void setAverages() {
+        double c = 0;
         for (int i = 0; i < vertices.size(); i++) {
-            c+=vertices.get(i).x;
+            c += vertices.get(i).x;
         }
 
-        x = c/vertices.size();
+        x = c / vertices.size();
 
-        c=0;
+        c = 0;
         for (int i = 0; i < vertices.size(); i++) {
-            c+=vertices.get(i).y;
+            c += vertices.get(i).y;
         }
-        y = c/vertices.size();
+        y = c / vertices.size();
 
-        c=0;
+        c = 0;
         for (int i = 0; i < vertices.size(); i++) {
-            c+=vertices.get(i).z;
+            c += vertices.get(i).z;
         }
-        z = c/vertices.size();
+        z = c / vertices.size();
     }
 
-    public void draw(Canvas canvas)
-    {
+    public void draw(Canvas canvas) {
         canvas.drawPath(path, paint);
         //canvas.clipOutPath(path);
     }
