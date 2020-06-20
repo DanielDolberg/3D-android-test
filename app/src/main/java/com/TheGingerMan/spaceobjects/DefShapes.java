@@ -8,6 +8,13 @@ import javax.crypto.Cipher;
 
 public class DefShapes {
 
+    ////////colors
+    //orange.....ish =  255, 151, 0
+    //nice warm blue....I dont remember how this color is called = 0, 255, 240
+    //purple = 189, 0, 255
+    //nice green = 26, 188, 156
+    //emo phaze =  52, 73, 94
+    //ya like jazz? =  244, 208, 63
 
     static double radius4Circles = 4;
 
@@ -116,7 +123,7 @@ public class DefShapes {
         f.vertices.add(cubeVertices.get(6));
         f.vertices.add(cubeVertices.get(2));
 
-        cubeFaces.add(new Face(Color.GREEN));
+        cubeFaces.add(new Face(Color.rgb(255, 151, 0)));
         f = cubeFaces.get(2);
         f.vertices.add(cubeVertices.get(1));
         f.vertices.add(cubeVertices.get(5));
@@ -130,7 +137,7 @@ public class DefShapes {
         f.vertices.add(cubeVertices.get(7));
         f.vertices.add(cubeVertices.get(6));
 
-        cubeFaces.add(new Face(Color.MAGENTA));
+        cubeFaces.add(new Face(Color.rgb(189, 0, 255)));
         f = cubeFaces.get(4);
         f.vertices.add(cubeVertices.get(0));
         f.vertices.add(cubeVertices.get(1));

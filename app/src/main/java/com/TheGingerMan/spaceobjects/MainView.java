@@ -96,7 +96,7 @@ public class MainView extends View implements Runnable{
         //canvas.drawRect(0,0,(float)width,(float)height,black); //draws the black background
 
 
-        space.draw(canvas);
+        //space.draw(canvas);
         //line.draw(canvas, space);
         //cube.draw(canvas,space);
         //tri.draw(canvas,space);
