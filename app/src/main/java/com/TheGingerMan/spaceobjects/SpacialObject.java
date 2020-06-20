@@ -12,10 +12,13 @@ public class SpacialObject {
     ArrayList<Vertex> vertices;
     ArrayList<Edge> edges;
     ArrayList<Face> faces;
+    ArrayList<Face> facesInDrawingOrder;
     Space globalSpace;
     Space localSpace;
     Paint red;
     Paint blue;
+
+    boolean candraw;
 
 
     public SpacialObject(Pivot pivot) {
@@ -24,6 +27,7 @@ public class SpacialObject {
         vertices = new ArrayList<>();
         edges = new ArrayList<>();
         faces = new ArrayList<>();
+        facesInDrawingOrder = new ArrayList<>();
 
 
         red = new Paint();
@@ -34,6 +38,8 @@ public class SpacialObject {
         blue = new Paint();
         blue.setColor(Color.BLUE);
         blue.setStrokeWidth(20);
+
+        candraw = false;
     }
 
     public void move(float dx, float dy,float dz)
@@ -75,7 +81,7 @@ public class SpacialObject {
             vertices.get(i).z = r * Math.cos(ne);
             vertices.get(i).y = -r * Math.sin(ne);
         }
-        updateFaces();
+       // updateFaces();
     }
 
     public void rotateGlobalY(double angle) {
@@ -104,7 +110,7 @@ public class SpacialObject {
             vertices.get(i).x =  r * Math.cos(ne);
             vertices.get(i).z =  r * Math.sin(ne);
         }
-        updateFaces();
+        //updateFaces();
     }
 
     public void rotateGlobalZ(double angle) {
@@ -133,25 +139,48 @@ public class SpacialObject {
             vertices.get(i).x = r * Math.cos(ne);
             vertices.get(i).y = -r * Math.sin(ne);
         }
-        updateFaces();
+        //updateFaces();
     }
 
 
 
 
     public void updateFaces(){
+        facesInDrawingOrder = new ArrayList<>();
+        for (int i = 0; i < faces.size(); i++) {
+            facesInDrawingOrder.add(null);
+        }
+        
+        Face f;
+        int c;
 
         for (int i = 0; i < faces.size(); i++) {
-            faces.get(i).setPath(globalSpace);
+            f=faces.get(i);
+            c=0;
+            f.setPath(globalSpace);
+            for (int j = 0; j < faces.size(); j++) {
+             if(f.z > faces.get(j).z)
+                 c++;
+               // System.out.println("deeeeee "+i +" "+ j +" "+ c);
+            }
+            facesInDrawingOrder.set(c,f);
         }
+
+        candraw = true;
     }
 
     public void draw(Canvas canvas, Space space){
 
-        for (int i = 0; i < faces.size(); i++) {
-            faces.get(i).draw(canvas);
-        }
+        updateFaces();
+        Face f;
+            for (int i = 0; i < facesInDrawingOrder.size(); i++) {
+                f = facesInDrawingOrder.get(i);
+                if (f != null) {
+                    f.draw(canvas);
+                }
+            }
 
+        /*
         for (int i = 0; i < edges.size() ; i++) {
             edges.get(i).draw(canvas,red,space);
         }
@@ -159,6 +188,8 @@ public class SpacialObject {
         for (int i = 0; i < vertices.size(); i++) {
             vertices.get(i).draw(canvas,blue,space);
         }
+
+         */
 
         //canvas.drawCircle((float)(space.XinSpace(pivot.vector.x)),(float)(space.YinSpace(pivot.vector.y)),(float) Math.sqrt(((space.XinSpace(pivot.vector.x) -space.XinSpace(vertices.get(0).x))*(space.XinSpace(pivot.vector.x) - space.XinSpace(vertices.get(0).x)) + (space.YinSpace(pivot.vector.y) - space.YinSpace(vertices.get(0).y))*(space.YinSpace(pivot.vector.y) - space.YinSpace(vertices.get(0).y)))),red);
     }

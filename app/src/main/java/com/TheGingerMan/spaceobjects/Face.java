@@ -38,7 +38,7 @@ public class Face {
             path.close();
 
             setAverages();
-            System.out.println("deeeeee "+x+" "+y+" "+z);
+           // System.out.println("deeeeee "+x+" "+y+" "+z);
         }
     }
 
