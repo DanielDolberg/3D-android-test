@@ -39,7 +39,7 @@ public class MainView extends View implements Runnable {
         space = new Space(width, height);
         BackGroundColor = new Paint(Color.GRAY);
 
-        test = DefShapes.CUBE(width,height);
+        test = DefShapes.TEST(width,height);
         test.state = 3;
         test.globalSpace = space;
         test.updateFaces();
@@ -53,6 +53,8 @@ public class MainView extends View implements Runnable {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+
 
         test.updateFaces();
 
@@ -93,6 +95,7 @@ public class MainView extends View implements Runnable {
     public void run() {
         while (true) {
 
+
             if (rotLeft)
                 test.rotateGlobalY(.1f);
             if (rotRight)
@@ -103,7 +106,8 @@ public class MainView extends View implements Runnable {
             if (rotDown)
                 test.rotateGlobalX(.1f);
 
-            System.out.println("yeeeee " + 1000.0 / SystemClock.elapsedRealtime());
+
+
 
             try {
                 Thread.sleep(1);

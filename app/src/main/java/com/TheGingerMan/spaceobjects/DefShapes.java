@@ -295,15 +295,102 @@ public class DefShapes {
     }
 
     public static SpacialObject TEST(double width, double height) {
-        ArrayList<Vertex> triVertices;
-        ArrayList<Edge> triEdges;
-        SpacialObject tri;
-        Pivot p = new Pivot(new Vector(0, 0, 0));
+        ArrayList<Vertex> cubeVertices;
+        ArrayList<Edge> cubeEdges;
+        ArrayList<Face> cubeFaces;
+        SpacialObject cube;
+        Face f;
 
-        tri = new SpacialObject(p);
+        cubeVertices = new ArrayList<>();
+        cubeEdges = new ArrayList<>();
+        cubeFaces = new ArrayList<>();
 
 
-        return tri;
+        double x = 4;
+        double y =8;
+        double z =x/4;
+
+
+        /////////////////////////////////////////////////////////////////vertecies
+        cubeVertices.add(new Vertex(-x, -y, z));// /\---------- 0
+        cubeVertices.add(new Vertex(x, -y, z)); // ----------/\ 1
+        cubeVertices.add(new Vertex(-x, y, z));// \/---------- 2
+        cubeVertices.add(new Vertex(x, y, z));// ----------\/ 3
+
+        cubeVertices.add(new Vertex(-x, -y, -z));// /\---------- 4
+        cubeVertices.add(new Vertex(x, -y, -z)); // ----------/\ 5
+        cubeVertices.add(new Vertex(-x, y, -z));// \/---------- 6
+        cubeVertices.add(new Vertex(x, y, -z));// ----------\/ 7
+        /////////////////////////////////////////////////////////////////vertecies
+
+        /////////////////////////////////////////////////////////////////edges
+        cubeEdges.add(new Edge(cubeVertices.get(0), cubeVertices.get(1)));
+        cubeEdges.add(new Edge(cubeVertices.get(0), cubeVertices.get(2)));
+        cubeEdges.add(new Edge(cubeVertices.get(2), cubeVertices.get(3)));
+        cubeEdges.add(new Edge(cubeVertices.get(1), cubeVertices.get(3)));
+
+        cubeEdges.add(new Edge(cubeVertices.get(4), cubeVertices.get(5)));
+        cubeEdges.add(new Edge(cubeVertices.get(4), cubeVertices.get(6)));
+        cubeEdges.add(new Edge(cubeVertices.get(6), cubeVertices.get(7)));
+        cubeEdges.add(new Edge(cubeVertices.get(5), cubeVertices.get(7)));
+
+        cubeEdges.add(new Edge(cubeVertices.get(0), cubeVertices.get(4)));
+        cubeEdges.add(new Edge(cubeVertices.get(1), cubeVertices.get(5)));
+        cubeEdges.add(new Edge(cubeVertices.get(2), cubeVertices.get(6)));
+        cubeEdges.add(new Edge(cubeVertices.get(3), cubeVertices.get(7)));
+        /////////////////////////////////////////////////////////////////edges
+
+
+        /////////////////////////////////////////////////////////////////faces
+        cubeFaces.add(new Face(Color.BLACK));
+        f = cubeFaces.get(0);
+        f.vertices.add(cubeVertices.get(0));
+        f.vertices.add(cubeVertices.get(1));
+        f.vertices.add(cubeVertices.get(3));
+        f.vertices.add(cubeVertices.get(2));
+
+        cubeFaces.add(new Face(Color.RED));
+        f = cubeFaces.get(1);
+        f.vertices.add(cubeVertices.get(0));
+        f.vertices.add(cubeVertices.get(4));
+        f.vertices.add(cubeVertices.get(6));
+        f.vertices.add(cubeVertices.get(2));
+
+        cubeFaces.add(new Face(Color.rgb(255, 151, 0)));
+        f = cubeFaces.get(2);
+        f.vertices.add(cubeVertices.get(1));
+        f.vertices.add(cubeVertices.get(5));
+        f.vertices.add(cubeVertices.get(7));
+        f.vertices.add(cubeVertices.get(3));
+
+        cubeFaces.add(new Face(Color.BLUE));
+        f = cubeFaces.get(3);
+        f.vertices.add(cubeVertices.get(4));
+        f.vertices.add(cubeVertices.get(5));
+        f.vertices.add(cubeVertices.get(7));
+        f.vertices.add(cubeVertices.get(6));
+
+        cubeFaces.add(new Face(Color.rgb(189, 0, 255)));
+        f = cubeFaces.get(4);
+        f.vertices.add(cubeVertices.get(0));
+        f.vertices.add(cubeVertices.get(1));
+        f.vertices.add(cubeVertices.get(5));
+        f.vertices.add(cubeVertices.get(4));
+
+        cubeFaces.add(new Face(Color.YELLOW));
+        f = cubeFaces.get(5);
+        f.vertices.add(cubeVertices.get(2));
+        f.vertices.add(cubeVertices.get(3));
+        f.vertices.add(cubeVertices.get(7));
+        f.vertices.add(cubeVertices.get(6));
+        /////////////////////////////////////////////////////////////////faces
+
+        cube = new SpacialObject(new Pivot(new Vector(0, 0, 0)));
+        cube.vertices = cubeVertices;
+        cube.edges = cubeEdges;
+        cube.faces = cubeFaces;
+
+        return cube;
     }
 
 

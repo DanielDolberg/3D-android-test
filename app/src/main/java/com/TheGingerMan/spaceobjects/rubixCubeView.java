@@ -2,40 +2,47 @@ package com.TheGingerMan.spaceobjects;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.View;
 
 import java.util.ArrayList;
 
 public class rubixCubeView extends View implements Runnable {
 
-    double width,height;
+    double width, height,ray;
+    final float rayLimit = 10;
+    Paint BackGroundColor;
     Space space;
-    ArrayList<SpacialObject> rubix;
-    SpacialObject cube;
-    Pivot worldPivot;
+
+    SpacialObject test;
+
+    ArrayList<Vertex> lineVertices;
+    ArrayList<Edge> lineEdges;
+    SpacialObject line;
+
+
+    boolean rotLeft, rotRight, rotUp, rotDown;
+
     Thread runthread;
 
-    public rubixCubeView(Context context,double width,double height) {
+
+    float timeStep;
+
+    public rubixCubeView(Context context, double width, double height) {
         super(context);
-        this.width =width;
+        this.width = width;
         this.height = height;
-        space = new Space(width,height);
-        worldPivot = new Pivot(new Vector(0,0,0));
-        rubix = new ArrayList<>();
-        cube = DefShapes.CUBE(width,height);
-        cube.globalSpace =space;
-        cube.state = 3;
 
+        space = new Space(width, height);
+        BackGroundColor = new Paint(Color.GRAY);
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                rubix.add(DefShapes.CUBE(width,height));
-                rubix.get(j+i).globalSpace =space;
-                rubix.get(j+i).state = 3;
-            }
+        test = DefShapes.TEST(width,height);
+        test.state = 3;
+        test.globalSpace = space;
+        test.updateFaces();
 
-        }
-
+        rotDown = rotLeft = rotRight = rotUp = false;
 
         runthread = new Thread(this, "runthread");
         runthread.start();
@@ -44,21 +51,48 @@ public class rubixCubeView extends View implements Runnable {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        space.draw(canvas);
 
-        for (int i = 0; i < rubix.size(); i++) {
-            rubix.get(i).draw(canvas,space);
+
+
+        test.updateFaces();
+
+        ray = -20;
+        boolean pass = false;
+        Face lastdrawn = null;
+
+        while (ray < rayLimit && !pass) {
+            for (int j = 0; j < test.faces.size(); j++) {
+                if (aprox(test.faces.get(j).z, ray, 1)) {
+                    if(lastdrawn != test.faces.get(j)){
+                        lastdrawn = test.faces.get(j);
+                        lastdrawn.draw(canvas);
+                    }
+                }
+            }
+            ray += 0.1;
         }
-        //cube.draw(canvas,space);
+
+
+        space.draw(canvas);
+        //test.draw(canvas, space);
+        //test.faces.get(0).draw(canvas);
 
         invalidate();
     }
+
+    public boolean aprox(double d1, double d2, double epproximation)
+    {
+        if(d1 < (d2 + epproximation) && d1 > (d2 - epproximation))
+            return true;
+
+        return  false;
+    }
+
 
     @Override
     public void run() {
         while (true) {
 
-            cube.rotateGlobalY(.1f);
 
             try {
                 Thread.sleep(1);
@@ -67,7 +101,4 @@ public class rubixCubeView extends View implements Runnable {
             }
         }
     }
-
-
-
 }

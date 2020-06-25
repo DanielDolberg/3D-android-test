@@ -10,7 +10,7 @@ import android.view.WindowManager;
 
 public class MainActivity extends AppCompatActivity {
 
-    MainView mainView;
+    rubixCubeView mainView;
     double width;
     double height;
 
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         width = size.x;
         height = size.y;
 
-        mainView = new MainView(this, width, height);
+        mainView = new rubixCubeView(this, width, height);
         setContentView(mainView);
     }
 
