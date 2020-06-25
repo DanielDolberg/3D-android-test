@@ -144,6 +144,13 @@ public class SpacialObject {
 
 
     public void updateFaces() {
+
+
+        for (int i = 0; i < faces.size(); i++) {
+            faces.get(i).setPath(globalSpace);
+        }
+
+        /*
         facesInDrawingOrder = new ArrayList<>();
         for (int i = 0; i < faces.size(); i++) {
             facesInDrawingOrder.add(null);
@@ -163,6 +170,8 @@ public class SpacialObject {
             facesInDrawingOrder.set(c, f);
         }
 
+         */
+
     } //REQUIRES SERIOUS TWEAKING
 
     public void draw(Canvas canvas, Space space) {
@@ -171,11 +180,8 @@ public class SpacialObject {
         Face f;
 
         if(state!=1) {
-            for (int i = 0; i < facesInDrawingOrder.size(); i++) {
-                f = facesInDrawingOrder.get(i);
-                if (f != null) {
-                    f.draw(canvas);
-                }
+            for (int i = 0; i < faces.size(); i++) {
+                faces.get(i).draw(canvas);
             }
         }
 
