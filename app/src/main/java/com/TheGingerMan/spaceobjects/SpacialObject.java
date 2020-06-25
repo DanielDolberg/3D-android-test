@@ -143,6 +143,8 @@ public class SpacialObject {
     }
 
 
+
+
     public void updateFaces() {
 
 
@@ -175,10 +177,7 @@ public class SpacialObject {
     } //REQUIRES SERIOUS TWEAKING
 
     public void draw(Canvas canvas, Space space) {
-
         updateFaces();
-        Face f;
-
         if(state!=1) {
             for (int i = 0; i < faces.size(); i++) {
                 faces.get(i).draw(canvas);
