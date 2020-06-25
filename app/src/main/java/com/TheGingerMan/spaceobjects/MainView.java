@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.os.SystemClock;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 public class MainView extends View implements Runnable {
 
     double width, height,ray;
-    final float rayLimit = -20;
+    final float rayLimit = 10;
     Paint BackGroundColor;
     Space space;
 
@@ -55,29 +56,21 @@ public class MainView extends View implements Runnable {
 
         test.updateFaces();
 
-                ray = 10;
+                ray = -20;
                 boolean pass = false;
                 Face lastdrawn = null;
 
-
-        for (int i = 0; i < width; i++)
-        {
-            while (ray > rayLimit && !pass) {
-                pass = false;
-                lastdrawn = null;
+            while (ray < rayLimit && !pass) {
                 for (int j = 0; j < test.faces.size(); j++) {
                     if (aprox(test.faces.get(j).z, ray, 1)) {
-                        if (lastdrawn != test.faces.get(j)) {
-                            lastdrawn = test.faces.get(j);
-                            lastdrawn.draw(canvas);
+                        if(lastdrawn != test.faces.get(j)){
+                        lastdrawn = test.faces.get(j);
+                        lastdrawn.draw(canvas);
                         }
-                        pass = true;
-                        j=test.faces.size()+1;
                     }
                 }
-                ray -= 0.1;
+                ray += 0.1;
             }
-        }
 
 
         space.draw(canvas);
@@ -109,6 +102,8 @@ public class MainView extends View implements Runnable {
                 test.rotateGlobalX(-.1f);
             if (rotDown)
                 test.rotateGlobalX(.1f);
+
+            System.out.println("yeeeee " + 1000.0 / SystemClock.elapsedRealtime());
 
             try {
                 Thread.sleep(1);
