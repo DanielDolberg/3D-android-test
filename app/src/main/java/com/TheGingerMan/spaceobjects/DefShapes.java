@@ -294,7 +294,7 @@ public class DefShapes {
 
     }
 
-    public static SpacialObject TEST(double width, double height) {
+    public static SpacialObject TEST(double width, double height, int xa, int ya, int za,float r) {
         ArrayList<Vertex> cubeVertices;
         ArrayList<Edge> cubeEdges;
         ArrayList<Face> cubeFaces;
@@ -306,21 +306,26 @@ public class DefShapes {
         cubeFaces = new ArrayList<>();
 
 
-        double x = 4;
-        double y =8;
-        double z =x/4;
+        double x = xa + r;
+        double x2 = xa - r;
+
+        double y = ya + r;
+        double y2 = ya - r;
+
+        double z = za + r;
+        double z2 = za - r;
 
 
         /////////////////////////////////////////////////////////////////vertecies
-        cubeVertices.add(new Vertex(-x, -y, z));// /\---------- 0
-        cubeVertices.add(new Vertex(x, -y, z)); // ----------/\ 1
-        cubeVertices.add(new Vertex(-x, y, z));// \/---------- 2
+        cubeVertices.add(new Vertex(x2, y2, z));// /\---------- 0
+        cubeVertices.add(new Vertex(x, y2, z)); // ----------/\ 1
+        cubeVertices.add(new Vertex(x2, y, z));// \/---------- 2
         cubeVertices.add(new Vertex(x, y, z));// ----------\/ 3
 
-        cubeVertices.add(new Vertex(-x, -y, -z));// /\---------- 4
-        cubeVertices.add(new Vertex(x, -y, -z)); // ----------/\ 5
-        cubeVertices.add(new Vertex(-x, y, -z));// \/---------- 6
-        cubeVertices.add(new Vertex(x, y, -z));// ----------\/ 7
+        cubeVertices.add(new Vertex(x2, y2, z2));// /\---------- 4
+        cubeVertices.add(new Vertex(x, y2, z2)); // ----------/\ 5
+        cubeVertices.add(new Vertex(x2, y, z2));// \/---------- 6
+        cubeVertices.add(new Vertex(x, y, z2));// ----------\/ 7
         /////////////////////////////////////////////////////////////////vertecies
 
         /////////////////////////////////////////////////////////////////edges

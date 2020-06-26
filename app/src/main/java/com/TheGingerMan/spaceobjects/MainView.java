@@ -39,7 +39,7 @@ public class MainView extends View implements Runnable {
         space = new Space(width, height);
         BackGroundColor = new Paint(Color.GRAY);
 
-        test = DefShapes.TEST(width,height);
+        test = DefShapes.CUBE(width,height);
         test.state = 3;
         test.globalSpace = space;
         test.updateFaces();

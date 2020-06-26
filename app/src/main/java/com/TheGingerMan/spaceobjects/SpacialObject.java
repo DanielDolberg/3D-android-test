@@ -55,6 +55,19 @@ public class SpacialObject {
         }
     }
 
+    public void moveTo(float dx, float dy, float dz) {
+        pivot.vector.x = dx;
+        pivot.vector.y = dy;
+        pivot.vector.z = dz;
+
+        for (int i = 0; i < vertices.size(); i++) {
+            vertices.get(i).x += pivot.vector.x;
+            vertices.get(i).y += pivot.vector.y;
+            vertices.get(i).z += pivot.vector.z;
+        }
+    }
+
+
     public void rotateGlobalX(double angle) {
         double z1, z2, y1, y2, o, ne;
         z1 = pivot.vector.z;

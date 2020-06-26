@@ -14,7 +14,7 @@ public class rubixCubeView extends View implements Runnable {
     final float rayLimit = 10;
     Paint BackGroundColor;
     Space space;
-
+    ArrayList<SpacialObject> rubcube;
     SpacialObject test;
 
     ArrayList<Vertex> lineVertices;
@@ -37,9 +37,24 @@ public class rubixCubeView extends View implements Runnable {
         space = new Space(width, height);
         BackGroundColor = new Paint(Color.GRAY);
 
-        test = DefShapes.TEST(width,height);
+        rubcube = new ArrayList<>();
+
+        int c = -1;
+
+        for (int i = -1; i < 2; i++) { //y
+            for (int j = -1; j < 2; j++) { // x
+                c++;
+                rubcube.add(DefShapes.TEST(width, height, j, i, 0, 1));
+                rubcube.get(c).state = 3;
+                rubcube.get(c).globalSpace = space;
+            }
+        }
+
+        test = DefShapes.TEST(width,height,0,0,0,1);
         test.state = 3;
         test.globalSpace = space;
+
+
         test.updateFaces();
 
         rotDown = rotLeft = rotRight = rotUp = false;
@@ -53,23 +68,29 @@ public class rubixCubeView extends View implements Runnable {
         super.onDraw(canvas);
 
 
-
-        test.updateFaces();
+        for (int i = 0; i < rubcube.size(); i++) {
+            rubcube.get(i).updateFaces();
+        }
 
         ray = -20;
         boolean pass = false;
         Face lastdrawn = null;
 
-        while (ray < rayLimit && !pass) {
-            for (int j = 0; j < test.faces.size(); j++) {
-                if (aprox(test.faces.get(j).z, ray, 1)) {
-                    if(lastdrawn != test.faces.get(j)){
-                        lastdrawn = test.faces.get(j);
-                        lastdrawn.draw(canvas);
+        for (int i = 0; i < rubcube.size(); i++) {
+            pass= false;
+            ray = -20;
+            lastdrawn = null;
+            while (ray < rayLimit && !pass) {
+                for (int j = 0; j < rubcube.get(i).faces.size(); j++) {
+                    if (aprox(rubcube.get(i).faces.get(j).z, ray, 1)) {
+                        if (lastdrawn != rubcube.get(i).faces.get(j)) {
+                            lastdrawn = rubcube.get(i).faces.get(j);
+                            lastdrawn.draw(canvas);
+                        }
                     }
                 }
+                ray += 0.1;
             }
-            ray += 0.1;
         }
 
 
@@ -92,6 +113,34 @@ public class rubixCubeView extends View implements Runnable {
     @Override
     public void run() {
         while (true) {
+
+            if (rotLeft) {
+                //test.rotateGlobalY(.1f);
+
+                for (int i = 0; i < rubcube.size(); i++) {
+                    rubcube.get(i).rotateGlobalY(.1f);
+                }
+            }
+            if (rotRight) {
+                //test.rotateGlobalY(-.1f);
+                for (int i = 0; i < rubcube.size(); i++) {
+                    rubcube.get(i).rotateGlobalY(-.1f);
+                }
+            }
+
+            if (rotUp) {
+                //test.rotateGlobalX(-.1f);
+                for (int i = 0; i < rubcube.size(); i++) {
+                    rubcube.get(i).rotateGlobalX(-.1f);
+                }
+            }
+            if (rotDown){
+               //test.rotateGlobalX(.1f);
+
+                for (int i = 0; i < rubcube.size(); i++) {
+                    rubcube.get(i).rotateGlobalX(.1f);
+                }
+            }
 
 
             try {
